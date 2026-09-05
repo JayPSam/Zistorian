@@ -620,20 +620,6 @@ async function loadTickets(){
     const now =
         new Date();
 
-    document.getElementById("totalTickets").textContent = data.length;
-
-document.getElementById("activeTickets").textContent =
-    data.filter(ticket => ticket.status === "active").length;
-
-document.getElementById("expiredTickets").textContent =
-    data.filter(ticket => ticket.status === "expired").length;
-
-document.getElementById("archivedTickets").textContent =
-    data.filter(ticket =>
-        ticket.status !== "active" &&
-        ticket.status !== "expired"
-    ).length;
-
     // AUTOMATICALLY MARK PAST TICKETS EXPIRED
     for(const ticket of data){
 
