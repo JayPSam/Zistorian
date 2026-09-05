@@ -860,5 +860,33 @@
 
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://qhblzsqcvykfwobdcqsn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+// Test connection
+async function testSupabase() {
+    const { data, error } = await supabaseClient
+        .storage
+        .listBuckets();
+
+    if (error) {
+        console.error("Supabase connection error:", error);
+        return;
+    }
+
+    console.log("Supabase connected:", data);
+}
+
+testSupabase();
+</script>
+
 </body>
 </html>
