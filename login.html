@@ -1,1 +1,193 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZISTORIAN | Owner Login</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: #050505;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            padding: 35px 28px;
+            background: #0d0d0d;
+            border: 1px solid #2b2410;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            color: #d4af37;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .brand p {
+            margin-top: 8px;
+            color: #888;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background: #151515;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #d4af37;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #d4af37;
+            color: #050505;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+        }
+
+        #message {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 14px;
+            color: #ff7777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <div class="brand">
+            <h1>ZISTORIAN</h1>
+            <p>OWNER DASHBOARD</p>
+        </div>
+
+        <form id="loginForm">
+
+            <label for="email">Owner Email</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter owner email"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button type="submit" id="loginButton">
+                ENTER DASHBOARD
+            </button>
+
+            <div id="message"></div>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const SUPABASE_URL = "PASTE_API_URL_HERE";
+        const SUPABASE_ANON_KEY = "PASTE_PUBLISHABLE_KEY_HERE";
+
+        const supabaseClient = supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+        const loginForm = document.getElementById("loginForm");
+        const loginButton = document.getElementById("loginButton");
+        const message = document.getElementById("message");
+
+        loginForm.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            loginButton.disabled = true;
+            loginButton.textContent = "SIGNING IN...";
+            message.textContent = "";
+
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+            if (error) {
+
+                message.textContent = error.message;
+
+                loginButton.disabled = false;
+                loginButton.textContent = "ENTER DASHBOARD";
+
+                return;
+            }
+
+            window.location.href = "dashboard.html";
+
+        });
+
+    </script>
+
+</body>
+</html>
