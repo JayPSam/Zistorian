@@ -571,6 +571,34 @@
 
     checkOwnerAccess();
 </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://qhblzsqcvykfwobdcqsn.supabase.co/rest/v1";
+    const SUPABASE_ANON_KEY = "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+    const supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+    async function checkOwnerAccess() {
+
+        const {
+            data: { session }
+        } = await supabaseClient.auth.getSession();
+
+        if (!session) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        console.log("Owner authenticated:", session.user.email);
+    }
+
+    checkOwnerAccess();
+</script>
     
 </body>
   </html>
