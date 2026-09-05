@@ -1,1 +1,1106 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZISTORIAN | Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#080808;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    padding:22px 18px;
+    border-bottom:1px solid #292929;
+    background:#0d0d0d;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.brand{
+    color:#d6ad52;
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.sub{
+    color:#888;
+    font-size:12px;
+    margin-top:5px;
+}
+
+main{
+    padding:20px 16px 50px;
+    max-width:800px;
+    margin:auto;
+}
+
+h1{
+    font-size:28px;
+    margin-bottom:7px;
+}
+
+.intro{
+    color:#999;
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:12px;
+    padding:15px 10px;
+}
+
+.stat strong{
+    display:block;
+    font-size:22px;
+    color:#d6ad52;
+}
+
+.stat span{
+    font-size:11px;
+    color:#888;
+}
+
+.panel{
+    background:#101010;
+    border:1px solid #292929;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.panel h2{
+    font-size:18px;
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    background:#080808;
+    border:1px solid #333;
+    color:#fff;
+    border-radius:9px;
+    padding:13px;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    outline:none;
+    border-color:#d6ad52;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:13px 16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.primary{
+    width:100%;
+    background:#d6ad52;
+    color:#080808;
+}
+
+.primary:hover{
+    background:#e6c36e;
+}
+
+.secondary{
+    background:#222;
+    color:#fff;
+}
+
+.danger{
+    background:#321414;
+    color:#ff9b9b;
+}
+
+.success{
+    background:#14321e;
+    color:#8ff0a8;
+}
+
+.ticket{
+    border:1px solid #292929;
+    background:#0b0b0b;
+    border-radius:13px;
+    padding:15px;
+    margin-bottom:12px;
+}
+
+.ticket-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.ticket h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.badge{
+    font-size:10px;
+    padding:5px 8px;
+    border-radius:20px;
+    background:#19321f;
+    color:#8ff0a8;
+    text-transform:uppercase;
+}
+
+.badge.expired{
+    background:#332020;
+    color:#ff9696;
+}
+
+.ticket-info{
+    color:#999;
+    font-size:12px;
+    line-height:1.7;
+    margin:10px 0;
+}
+
+.ticket-code{
+    background:#161616;
+    border:1px dashed #444;
+    border-radius:7px;
+    padding:10px;
+    color:#d6ad52;
+    font-weight:700;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.actions button{
+    flex:1;
+    min-width:100px;
+}
+
+.hidden{
+    display:none;
+}
+
+.message{
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+    font-size:13px;
+    display:none;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.success-msg{
+    background:#122519;
+    color:#8ff0a8;
+}
+
+.message.error-msg{
+    background:#301515;
+    color:#ff9b9b;
+}
+
+@media(max-width:500px){
+    .row{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .stats{
+        gap:7px;
+    }
+
+    .stat strong{
+        font-size:19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">ZISTORIAN</div>
+    <div class="sub">MR BHONYINGTON • PRIVATE MANAGEMENT</div>
+</header>
+
+<main>
+
+    <h1>Ticket Dashboard</h1>
+
+    <p class="intro">
+        Manage your betting tickets, availability and publishing.
+    </p>
+
+    <div id="message" class="message"></div>
+
+    <div class="stats">
+        <div class="stat">
+            <strong id="activeCount">0</strong>
+            <span>ACTIVE</span>
+        </div>
+
+        <div class="stat">
+            <strong id="expiredCount">0</strong>
+            <span>EXPIRED</span>
+        </div>
+
+        <div class="stat">
+            <strong id="totalCount">0</strong>
+            <span>TOTAL</span>
+        </div>
+    </div>
+
+    <!-- ADD / EDIT -->
+    <div class="panel">
+
+        <h2 id="formTitle">Add New Ticket</h2>
+
+        <form id="ticketForm">
+
+            <input type="hidden" id="editingId">
+
+            <label>Ticket Name</label>
+            <input
+                type="text"
+                id="title"
+                placeholder="Weekend Special"
+                required
+            >
+
+            <label>Ticket Code</label>
+            <input
+                type="text"
+                id="ticketCode"
+                placeholder="ABC123"
+                required
+            >
+
+            <div class="row">
+
+                <div>
+                    <label>Odds</label>
+                    <input
+                        type="number"
+                        id="odds"
+                        step="0.01"
+                        placeholder="25.50"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label>Price (R)</label>
+                    <input
+                        type="number"
+                        id="price"
+                        step="0.01"
+                        placeholder="50"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <label>Description</label>
+
+            <textarea
+                id="description"
+                placeholder="Add a short description..."
+            ></textarea>
+
+            <div class="row">
+
+                <div>
+                    <label>First Game</label>
+                    <input
+                        type="datetime-local"
+                        id="firstGame"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label>Last Game</label>
+                    <input
+                        type="datetime-local"
+                        id="lastGame"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <button class="primary" type="submit" id="submitBtn">
+                PUBLISH TICKET
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- CURRENT TICKETS -->
+    <div class="panel">
+
+        <h2>Your Tickets</h2>
+
+        <div id="ticketsList">
+            Loading tickets...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://qhblzsqcvykfwobdcqsn.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+
+// SECURITY CHECK
+async function checkLogin(){
+
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if(!session){
+
+        window.location.href = "login.html";
+
+        return false;
+    }
+
+    return true;
+}
+
+
+// MESSAGE
+function showMessage(text,type){
+
+    const message =
+        document.getElementById("message");
+
+    message.textContent = text;
+
+    message.className =
+        "message show " +
+        (type === "success"
+            ? "success-msg"
+            : "error-msg");
+
+    setTimeout(() => {
+
+        message.classList.remove("show");
+
+    },4000);
+}
+
+
+// LOAD TICKETS
+async function loadTickets(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("tickets")
+        .select("*")
+        .order("created_at", {
+            ascending:false
+        });
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById(
+            "ticketsList"
+        ).innerHTML =
+        "Unable to load tickets.";
+
+        return;
+    }
+
+
+    const now =
+        new Date();
+
+
+    // AUTOMATICALLY MARK PAST TICKETS EXPIRED
+    for(const ticket of data){
+
+        if(
+            ticket.status === "active" &&
+            new Date(ticket.last_game_at) <= now
+        ){
+
+            await supabaseClient
+                .from("tickets")
+                .update({
+                    status:"expired"
+                })
+                .eq("id",ticket.id);
+
+            ticket.status = "expired";
+        }
+    }
+
+
+    const active =
+        data.filter(
+            ticket =>
+                ticket.status === "active"
+        ).length;
+
+    const expired =
+        data.filter(
+            ticket =>
+                ticket.status === "expired"
+        ).length;
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent = active;
+
+    document.getElementById(
+        "expiredCount"
+    ).textContent = expired;
+
+    document.getElementById(
+        "totalCount"
+    ).textContent = data.length;
+
+
+    const list =
+        document.getElementById("ticketsList");
+
+
+    if(data.length === 0){
+
+        list.innerHTML =
+        "<p style='color:#777'>No tickets created yet.</p>";
+
+        return;
+    }
+
+
+    list.innerHTML =
+        data.map(ticket => {
+
+            const first =
+                new Date(ticket.first_game_at)
+                .toLocaleString();
+
+            const last =
+                new Date(ticket.last_game_at)
+                .toLocaleString();
+
+
+            const expired =
+                ticket.status !== "active";
+
+
+            return `
+
+            <div class="ticket">
+
+                <div class="ticket-top">
+
+                    <div>
+                        <h3>
+                            ${escapeHtml(ticket.title)}
+                        </h3>
+
+                        <div style="color:#d6ad52;font-size:13px">
+                            Odds ${ticket.odds}
+                            • R${ticket.price}
+                        </div>
+                    </div>
+
+                    <span class="badge ${expired ? "expired" : ""}">
+                        ${ticket.status}
+                    </span>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                    First game:
+                    ${first}
+
+                    <br>
+
+                    Last game:
+                    ${last}
+
+                </div>
+
+
+                <div class="ticket-code">
+
+                    ${escapeHtml(ticket.ticket_code)}
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="secondary"
+                        onclick="editTicket('${ticket.id}')"
+                    >
+                        EDIT
+                    </button>
+
+                    ${
+                        ticket.status === "active"
+
+                        ?
+
+                        `<button
+                            class="danger"
+                            onclick="archiveTicket('${ticket.id}')"
+                        >
+                            ARCHIVE
+                        </button>`
+
+                        :
+
+                        `<button
+                            class="success"
+                            onclick="republishTicket('${ticket.id}')"
+                        >
+                            REPUBLISH
+                        </button>`
+                    }
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join("");
+}
+
+
+// EDIT
+async function editTicket(id){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("tickets")
+        .select("*")
+        .eq("id",id)
+        .single();
+
+
+    if(error){
+
+        showMessage(
+            "Could not load ticket.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    document.getElementById(
+        "editingId"
+    ).value = data.id;
+
+    document.getElementById(
+        "title"
+    ).value = data.title;
+
+    document.getElementById(
+        "ticketCode"
+    ).value = data.ticket_code;
+
+    document.getElementById(
+        "odds"
+    ).value = data.odds;
+
+    document.getElementById(
+        "price"
+    ).value = data.price;
+
+    document.getElementById(
+        "description"
+    ).value = data.description || "";
+
+
+    document.getElementById(
+        "firstGame"
+    ).value =
+        toDateInput(data.first_game_at);
+
+
+    document.getElementById(
+        "lastGame"
+    ).value =
+        toDateInput(data.last_game_at);
+
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Edit Ticket";
+
+
+    document.getElementById(
+        "submitBtn"
+    ).textContent =
+        "SAVE CHANGES";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+// ARCHIVE
+async function archiveTicket(id){
+
+    const confirmed =
+        confirm(
+            "Archive this ticket?"
+        );
+
+    if(!confirmed) return;
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("tickets")
+        .update({
+            status:"archived"
+        })
+        .eq("id",id);
+
+
+    if(error){
+
+        showMessage(
+            "Could not archive ticket.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    showMessage(
+        "Ticket archived.",
+        "success"
+    );
+
+
+    loadTickets();
+}
+
+
+// REPUBLISH
+async function republishTicket(id){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("tickets")
+        .select("*")
+        .eq("id",id)
+        .single();
+
+
+    if(error){
+
+        showMessage(
+            "Could not load ticket.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    document.getElementById(
+        "editingId"
+    ).value = data.id;
+
+    document.getElementById(
+        "title"
+    ).value = data.title;
+
+    document.getElementById(
+        "ticketCode"
+    ).value = data.ticket_code;
+
+    document.getElementById(
+        "odds"
+    ).value = data.odds;
+
+    document.getElementById(
+        "price"
+    ).value = data.price;
+
+    document.getElementById(
+        "description"
+    ).value = data.description || "";
+
+
+    document.getElementById(
+        "firstGame"
+    ).value = "";
+
+
+    document.getElementById(
+        "lastGame"
+    ).value = "";
+
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Republish Ticket";
+
+
+    document.getElementById(
+        "submitBtn"
+    ).textContent =
+        "REPUBLISH TICKET";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+// FORM SUBMISSION
+document
+.getElementById("ticketForm")
+.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const id =
+            document.getElementById(
+                "editingId"
+            ).value;
+
+
+        const title =
+            document.getElementById(
+                "title"
+            ).value.trim();
+
+
+        const ticketCode =
+            document.getElementById(
+                "ticketCode"
+            ).value.trim();
+
+
+        const odds =
+            parseFloat(
+                document.getElementById(
+                    "odds"
+                ).value
+            );
+
+
+        const price =
+            parseFloat(
+                document.getElementById(
+                    "price"
+                ).value
+            );
+
+
+        const description =
+            document.getElementById(
+                "description"
+            ).value.trim();
+
+
+        const firstGame =
+            document.getElementById(
+                "firstGame"
+            ).value;
+
+
+        const lastGame =
+            document.getElementById(
+                "lastGame"
+            ).value;
+
+
+        if(
+            !firstGame ||
+            !lastGame
+        ){
+
+            showMessage(
+                "Please enter both game dates.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(
+            new Date(lastGame)
+            <=
+            new Date(firstGame)
+        ){
+
+            showMessage(
+                "Last game must be after first game.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const payload = {
+
+            title:title,
+
+            ticket_code:ticketCode,
+
+            odds:odds,
+
+            price:price,
+
+            description:description,
+
+            first_game_at:
+                new Date(firstGame)
+                .toISOString(),
+
+            last_game_at:
+                new Date(lastGame)
+                .toISOString(),
+
+            status:"active"
+        };
+
+
+        let result;
+
+
+        if(id){
+
+            result =
+                await supabaseClient
+                    .from("tickets")
+                    .update(payload)
+                    .eq("id",id);
+
+        }else{
+
+            result =
+                await supabaseClient
+                    .from("tickets")
+                    .insert(payload);
+        }
+
+
+        if(result.error){
+
+            console.error(
+                result.error
+            );
+
+            showMessage(
+                "Could not save ticket.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        showMessage(
+            id
+            ? "Ticket updated successfully."
+            : "Ticket successfully published.",
+            "success"
+        );
+
+
+        resetForm();
+
+        loadTickets();
+
+    }
+);
+
+
+// RESET FORM
+function resetForm(){
+
+    document
+        .getElementById("ticketForm")
+        .reset();
+
+    document.getElementById(
+        "editingId"
+    ).value = "";
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Add New Ticket";
+
+    document.getElementById(
+        "submitBtn"
+    ).textContent =
+        "PUBLISH TICKET";
+}
+
+
+// DATE FORMAT
+function toDateInput(date){
+
+    const d =
+        new Date(date);
+
+    const pad =
+        number =>
+        String(number)
+        .padStart(2,"0");
+
+
+    return (
+        d.getFullYear() +
+        "-" +
+        pad(d.getMonth()+1) +
+        "-" +
+        pad(d.getDate()) +
+        "T" +
+        pad(d.getHours()) +
+        ":" +
+        pad(d.getMinutes())
+    );
+}
+
+
+// BASIC HTML ESCAPING
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+// START
+(async function(){
+
+    const loggedIn =
+        await checkLogin();
+
+    if(loggedIn){
+
+        await loadTickets();
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>
