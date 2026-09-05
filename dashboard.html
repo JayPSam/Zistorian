@@ -960,6 +960,12 @@ document
     document.getElementById(
         "ticketImage"
     ).files[0];
+        if (!imageFile) {
+    showMessage("Please select an image first.", "error");
+    return;
+}
+
+console.log("Selected image:", imageFile.name, imageFile.size);
 
 
         const firstGame =
