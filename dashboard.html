@@ -892,9 +892,10 @@ async function republishTicket(id){
         });
 
     if(error){
-        console.error(error);
-        throw error;
-    }
+    console.error("SUPABASE UPLOAD ERROR:", error);
+    alert("SUPABASE ERROR: " + error.message);
+    throw error;
+}
 
         const {
         data
