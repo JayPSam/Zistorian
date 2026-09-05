@@ -369,6 +369,14 @@ button{
                 placeholder="Add a short description..."
             ></textarea>
 
+            <label>Ticket Image</label>
+
+<input
+    type="file"
+    id="ticketImage"
+    accept="image/*"
+>
+
             <div class="row">
 
                 <div>
@@ -858,6 +866,45 @@ async function republishTicket(id){
     });
 }
 
+    async function uploadTicketImage(file){
+
+    if(!file){
+        return null;
+    }
+
+    const fileExt =
+        file.name.split(".").pop();
+
+    const fileName =
+        `${crypto.randomUUID()}.${fileExt}`;
+
+    const filePath =
+        `tickets/${fileName}`;
+
+        const {
+        error
+    } = await supabaseClient
+        .storage
+        .from("ticket-images")
+        .upload(filePath, file, {
+            cacheControl:"3600",
+            upsert:false
+        });
+
+    if(error){
+        console.error(error);
+        throw error;
+    }
+
+        const {
+        data
+    } = supabaseClient
+        .storage
+        .from("ticket-images")
+        .getPublicUrl(filePath);
+
+    return data.publicUrl;
+}
 
 // FORM SUBMISSION
 document
@@ -908,6 +955,11 @@ document
                 "description"
             ).value.trim();
 
+        const imageFile =
+    document.getElementById(
+        "ticketImage"
+    ).files[0];
+
 
         const firstGame =
             document.getElementById(
@@ -950,9 +1002,29 @@ document
         }
 
 
-        const payload = {
+        let imageUrl = null;
 
-            title:title,
+try{
+
+    imageUrl =
+        await uploadTicketImage(
+            imageFile
+        );
+
+}catch(error){
+
+    showMessage(
+        "Image upload failed. Please try again.",
+        "error"
+    );
+
+    return;
+}
+
+
+const payload = {
+
+    title:title,
 
             ticket_code:ticketCode,
 
@@ -961,6 +1033,8 @@ document
             price:price,
 
             description:description,
+
+    image_url:imageUrl,
 
             first_game_at:
                 new Date(firstGame)
