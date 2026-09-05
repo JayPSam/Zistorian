@@ -1,1 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>ZISTORIAN Soccer Bets | Mr Bhonyington</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* TOP BAR */
+
+        .topbar {
+            background: #080808;
+            border-bottom: 1px solid #252525;
+            padding: 12px 0;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #bdbdbd;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #222;
+        }
+
+        .nav-inner {
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #d4af37;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            font-size: 14px;
+            color: #cfcfcf;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.16), transparent 35%),
+                linear-gradient(180deg, #090909 0%, #050505 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            color: #d4af37;
+            font-size: 12px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 11vw, 110px);
+            line-height: 0.9;
+            font-weight: 900;
+            letter-spacing: -4px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: #d4af37;
+        }
+
+        .hero-subtitle {
+            max-width: 650px;
+            margin: 30px auto;
+            color: #bdbdbd;
+            font-size: 17px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid #d4af37;
+            transition: 0.25s;
+        }
+
+        .btn-gold {
+            background: #d4af37;
+            color: #050505;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            color: #ffffff;
+        }
+
+        .btn-outline:hover {
+            background: #d4af37;
+            color: #050505;
+        }
+
+        /* TICKER */
+
+        .ticker {
+            background: #d4af37;
+            color: #050505;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-size: 12px;
+            padding: 13px 0;
+        }
+
+        .ticker-track {
+            display: inline-block;
+            animation: ticker 22s linear infinite;
+        }
+
+        .ticker span {
+            margin-right: 50px;
+        }
+
+        @keyframes ticker {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 90px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 45px;
+        }
+
+        .section-label {
+            color: #d4af37;
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(32px, 6vw, 55px);
+            line-height: 1;
+        }
+
+        .section-heading p {
+            margin-top: 15px;
+            color: #888;
+            max-width: 650px;
+        }
+
+        /* TICKETS */
+
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .ticket {
+            background: linear-gradient(145deg, #111111, #080808);
+            border: 1px solid #252525;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .ticket:hover {
+            transform: translateY(-6px);
+            border-color: #d4af37;
+        }
+
+        .ticket-top {
+            padding: 25px;
+            border-bottom: 1px solid #242424;
+        }
+
+        .ticket-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.12);
+            color: #d4af37;
+            padding: 6px 10px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .ticket h3 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .odds {
+            font-size: 35px;
+            font-weight: 900;
+            color: #d4af37;
+        }
+
+        .ticket-info {
+            padding: 20px 25px;
+        }
+
+        .ticket-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 9px 0;
+            border-bottom: 1px solid #181818;
+            font-size: 13px;
+        }
+
+        .ticket-row span:first-child {
+            color: #777;
+        }
+
+        .ticket-price {
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .ticket-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 13px;
+            background: #d4af37;
+            color: #050505;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        /* RESULTS */
+
+        .results-box {
+            background: #0b0b0b;
+            border: 1px solid #252525;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid #202020;
+        }
+
+        th {
+            color: #d4af37;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: #cfcfcf;
+        }
+
+        .win {
+            color: #62d18b;
+            font-weight: 800;
+        }
+
+        .loss {
+            color: #e56a6a;
+            font-weight: 800;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .portrait {
+            min-height: 450px;
+            border-radius: 10px;
+            border: 1px solid #2b2b2b;
+            background:
+                radial-gradient(circle at center, #252525 0%, #111111 45%, #050505 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portrait span {
+            font-size: 90px;
+            font-weight: 900;
+            color: #d4af37;
+        }
+
+        .about-text h2 {
+            font-size: 50px;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .stat {
+            border: 1px solid #252525;
+            padding: 20px;
+            background: #0b0b0b;
+        }
+
+        .stat strong {
+            display: block;
+            color: #d4af37;
+            font-size: 28px;
+        }
+
+        .stat small {
+            color: #777;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* CHECKOUT */
+
+        .checkout {
+            background: linear-gradient(145deg, #111111, #070707);
+            border: 1px solid #2b2b2b;
+            border-radius: 10px;
+            padding: 35px;
+            max-width: 700px;
+        }
+
+        .checkout h3 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .checkout p {
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .payment-option {
+            padding: 25px;
+            border: 1px solid #292929;
+            border-radius: 6px;
+            background: #0b0b0b;
+        }
+
+        .payment-option strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .payment-option span {
+            color: #777;
+            font-size: 12px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid #222;
+            padding: 40px 0;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .responsible {
+            color: #888;
+            margin-top: 15px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .tickets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portrait {
+                min-height: 320px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            section {
+                padding: 65px 0;
+            }
+
+            .hero {
+                min-height: 620px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-subtitle {
+                font-size: 15px;
+            }
+
+            .about-text h2 {
+                font-size: 38px;
+            }
+
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        ZISTORIAN SOCCER BETS • OFFICIAL TICKET PLATFORM • 18+ BET RESPONSIBLY
+    </div>
+
+    <nav>
+        <div class="container nav-inner">
+
+            <div class="logo">
+                ZISTORIAN <span>SOCCER BETS</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="#tickets">Tickets</a>
+                <a href="#results">Results</a>
+                <a href="#about">Mr Bhonyington</a>
+                <a href="#checkout">Purchase</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="container hero-content">
+
+                <div class="eyebrow">
+                    The Home Of The Ticket Code
+                </div>
+
+                <h1>
+                    MR
+                    <span>BHONYINGTON</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Welcome to ZISTORIAN Soccer Bets — the official home
+                    for accessing the latest football betting tickets,
+                    codes and selections from Mr Bhonyington.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#tickets" class="btn btn-gold">
+                        View Tickets
+                    </a>
+
+                    <a href="#about" class="btn btn-outline">
+                        Meet Mr Bhonyington
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TICKER -->
+
+        <div class="ticker">
+            <div class="ticker-track">
+
+                <span>🔥 NEW TICKETS AVAILABLE</span>
+                <span>⚽ ZISTORIAN SOCCER BETS</span>
+                <span>👑 MR BHONYINGTON</span>
+                <span>🎟️ SELECT • PURCHASE • PLAY</span>
+                <span>🔥 NEW TICKETS AVAILABLE</span>
+                <span>⚽ ZISTORIAN SOCCER BETS</span>
+
+            </div>
+        </div>
+
+        <!-- TICKETS -->
+
+        <section id="tickets">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        Latest Releases
+                    </div>
+
+                    <h2>
+                        Available Tickets
+                    </h2>
+
+                    <p>
+                        Browse the latest available ticket selections.
+                        Each ticket displays its price, odds and game window.
+                    </p>
+
+                </div>
+
+                <div class="tickets-grid">
+
+                    <article class="ticket">
+
+                        <div class="ticket-top">
+
+                            <div class="ticket-badge">
+                                WEEKEND SPECIAL
+                            </div>
+
+                            <h3>
+                                Weekend Special
+                            </h3>
+
+                            <div class="odds">
+                                38.50
+                            </div>
+
+                        </div>
+
+                        <div class="ticket-info">
+
+                            <div class="ticket-row">
+                                <span>First Game</span>
+                                <strong>Saturday 15:00</strong>
+                            </div>
+
+                            <div class="ticket-row">
+                                <span>Last Game</span>
+                                <strong>Sunday 20:00</strong>
+                            </div>
+
+                            <div class="ticket-row">
+                                <span>Ticket Price</span>
+                                <strong class="ticket-price">R50</strong>
+                            </div>
+
+                            <a href="#checkout" class="ticket-button">
+                                Purchase Ticket
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    <article class="ticket">
+
+                        <div class="ticket-top">
+
+                            <div class="ticket-badge">
+                                FRIDAY FIRE
+                            </div>
+
+                            <h3>
+                                Friday Fire
+                            </h3>
+
+                            <div class="odds">
+                                17.80
+                            </div>
+
+                        </div>
+
+                        <div class="ticket-info">
+
+                            <div class="ticket-row">
+                                <span>First Game</span>
+                                <strong>Friday 18:00</strong>
+                            </div>
+
+                            <div class="ticket-row">
+                                <span>Last Game</span>
+                                <strong>Friday 23:00</strong>
+                            </div>
+
+                            <div class="ticket-row">
+                                <span>Ticket Price</span>
+                                <strong class="ticket-price">R30</strong>
+                            </div>
+
+                            <a href="#checkout" class="ticket-button">
+                                Purchase Ticket
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    <article class="ticket">
+
+                        <div class="ticket-top">
+
+                            <div class="ticket-badge">
+                                CHAMPIONS COMBO
+                            </div>
+
+                            <h3>
+                                Champions Combo
+                            </h3>
+
+                            <div class="odds">
+                                12.40
+                            </div>
+
+                        </div>
+
+                        <div class="ticket-info">
+
+                            <div class="ticket-row">
+                                <span>First Game</span>
+                                <strong>Saturday 16:00</strong>
+                            </div>
+
+                            <div class="ticket-row">
+                                <span>Last Game</span>
+                                <strong>Monday 21:00</strong>
+                            </div>
+
+                            <div class="ticket-row">
+                                <span>Ticket Price</span>
+                                <strong class="ticket-price">R30</strong>
+                            </div>
+
+                            <a href="#checkout" class="ticket-button">
+                                Purchase Ticket
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- RESULTS -->
+
+        <section id="results">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        Track Record
+                    </div>
+
+                    <h2>
+                        Recent Results
+                    </h2>
+
+                    <p>
+                        Results can be published here to keep the community
+                        updated on completed tickets.
+                    </p>
+
+                </div>
+
+                <div class="results-box">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Ticket</th>
+                                <th>Odds</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Weekend Special</td>
+                                <td>38.50</td>
+                                <td>Recent</td>
+                                <td class="win">WIN</td>
+                            </tr>
+
+                            <tr>
+                                <td>Friday Fire</td>
+                                <td>17.80</td>
+                                <td>Recent</td>
+                                <td class="win">WIN</td>
+                            </tr>
+
+                            <tr>
+                                <td>Champions Combo</td>
+                                <td>12.40</td>
+                                <td>Recent</td>
+                                <td class="loss">LOSS</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ABOUT -->
+
+        <section id="about">
+
+            <div class="container about-grid">
+
+                <div class="portrait">
+                    <span>MB</span>
+                </div>
+
+                <div class="about-text">
+
+                    <div class="section-label">
+                        The Man Behind The Codes
+                    </div>
+
+                    <h2>
+                        MR<br>
+                        BHONYINGTON
+                    </h2>
+
+                    <p>
+                        Mr Bhonyington is the personality behind the
+                        ZISTORIAN Soccer Bets ticket selections.
+                    </p>
+
+                    <p>
+                        This platform gives customers one central place
+                        to view available tickets, check their details
+                        and purchase the selections they want.
+                    </p>
+
+                    <div class="stats">
+
+                        <div class="stat">
+                            <strong>24K+</strong>
+                            <small>Community</small>
+                        </div>
+
+                        <div class="stat">
+                            <strong>120+</strong>
+                            <small>Tickets</small>
+                        </div>
+
+                        <div class="stat">
+                            <strong>24/7</strong>
+                            <small>Platform</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CHECKOUT -->
+
+        <section id="checkout">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        Secure Checkout
+                    </div>
+
+                    <h2>
+                        Get Your Ticket
+                    </h2>
+
+                    <p>
+                        Choose your preferred payment method.
+                        Payment processing will be connected here.
+                    </p>
+
+                </div>
+
+                <div class="checkout">
+
+                    <h3>
+                        Choose Payment
+                    </h3>
+
+                    <p>
+                        Select an available payment method to continue.
+                    </p>
+
+                    <div class="payment-options">
+
+                        <div class="payment-option">
+
+                            <strong>
+                                Bank Card
+                            </strong>
+
+                            <span>
+                                Visa / Mastercard payment
+                            </span>
+
+                        </div>
+
+                        <div class="payment-option">
+
+                            <strong>
+                                Voucher
+                            </strong>
+
+                            <span>
+                                Enter your approved voucher code
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <a href="#" class="btn btn-gold">
+                        Continue
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="container footer-inner">
+
+            <div>
+                © 2026 ZISTORIAN Soccer Bets
+            </div>
+
+            <div>
+                Powered by ZISTORIAN
+            </div>
+
+        </div>
+
+        <div class="container responsible">
+            18+. Gambling involves risk. Bet responsibly.
+        </div>
+
+    </footer>
+
+</body>
+</html>
