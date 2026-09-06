@@ -1,1 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZISTORIAN | Purchase Ticket</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050505;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.header {
+    padding: 28px 20px;
+    border-bottom: 1px solid #2a2414;
+    text-align: center;
+}
+
+.logo {
+    color: #e0b82f;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 5px;
+}
+
+.container {
+    width: 92%;
+    max-width: 600px;
+    margin: 35px auto 60px;
+}
+
+.back {
+    display: inline-block;
+    color: #aaa;
+    text-decoration: none;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+.back:hover {
+    color: #e0b82f;
+}
+
+.card {
+    background: #111;
+    border: 1px solid #3b3218;
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+}
+
+.label {
+    color: #999;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.title {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.info {
+    background: #191919;
+    padding: 18px;
+    border-radius: 14px;
+}
+
+.info strong {
+    display: block;
+    color: #e0b82f;
+    font-size: 24px;
+    margin-top: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+input {
+    width: 100%;
+    padding: 16px;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #e0b82f;
+}
+
+.quantity-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #181818;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.quantity-row input {
+    width: 90px;
+    text-align: center;
+}
+
+.total {
+    margin-top: 8px;
+    padding: 20px;
+    background: #191919;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total span:first-child {
+    color: #aaa;
+}
+
+.total span:last-child {
+    color: #e0b82f;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 8px;
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 13px;
+    background: #e0b82f;
+    color: #050505;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #f0c83e;
+}
+
+.note {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    margin-top: 18px;
+    line-height: 1.5;
+}
+
+.message {
+    text-align: center;
+    padding: 30px 10px;
+    color: #aaa;
+}
+
+.error {
+    color: #ff7070;
+}
+
+@media (max-width: 480px) {
+
+    .card {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">ZISTORIAN</div>
+</header>
+
+<main class="container">
+
+<a href="index.html#tickets" class="back">
+    ← Back to tickets
+</a>
+
+<div class="card">
+
+    <div id="loading" class="message">
+        Loading ticket...
+    </div>
+
+    <div id="checkout" style="display:none;">
+
+        <div class="label">
+            Purchase Ticket
+        </div>
+
+        <h1 class="title" id="ticketTitle">
+            Ticket
+        </h1>
+
+        <div class="info-grid">
+
+            <div class="info">
+
+                <div class="label">
+                    Odds
+                </div>
+
+                <strong id="ticketOdds">
+                    --
+                </strong>
+
+            </div>
+
+            <div class="info">
+
+                <div class="label">
+                    Price
+                </div>
+
+                <strong id="ticketPrice">
+                    R0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+        <p
+            id="ticketDescription"
+            class="note"
+            style="margin-bottom:20px;"
+        ></p>
+
+        <form id="purchaseForm">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Full name"
+                required
+            >
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="WhatsApp / Phone number"
+                required
+            >
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email address"
+                required
+            >
+
+            <div class="quantity-row">
+
+                <div>
+
+                    <div class="label">
+                        Number of tickets
+                    </div>
+
+                </div>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    value="1"
+                    min="1"
+                    max="20"
+                    required
+                >
+
+            </div>
+
+            <div class="total">
+
+                <span>
+                    Total
+                </span>
+
+                <span id="totalAmount">
+                    R0.00
+                </span>
+
+            </div>
+
+            <button type="submit">
+                CONTINUE TO PAYMENT
+            </button>
+
+        </form>
+
+        <p class="note">
+            Payment gateway will be connected before launch.
+            No real payment will be taken during testing.
+        </p>
+
+    </div>
+
+    <div
+        id="error"
+        class="message error"
+        style="display:none;"
+    ></div>
+
+</div>
+
+</main>
+
+<script>
+
+const SUPABASE_URL =
+    "https://qhblzsqcvykfwobdcqsn.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+const ticketId =
+    new URLSearchParams(
+        window.location.search
+    ).get("ticket");
+
+const loading =
+    document.getElementById("loading");
+
+const checkout =
+    document.getElementById("checkout");
+
+const errorBox =
+    document.getElementById("error");
+
+const quantity =
+    document.getElementById("quantity");
+
+const totalAmount =
+    document.getElementById("totalAmount");
+
+let price = 0;
+
+
+/* LOAD SELECTED TICKET */
+
+async function loadTicket() {
+
+    if (!ticketId) {
+
+        loading.style.display = "none";
+
+        errorBox.style.display = "block";
+
+        errorBox.textContent =
+            "No ticket was selected.";
+
+        return;
+    }
+
+    const {
+        data: ticket,
+        error
+    } = await supabaseClient
+
+        .from("tickets")
+
+        .select("*")
+
+        .eq("id", ticketId)
+
+        .single();
+
+
+    if (error || !ticket) {
+
+        console.error(
+            "Ticket loading error:",
+            error
+        );
+
+        loading.style.display = "none";
+
+        errorBox.style.display = "block";
+
+        errorBox.textContent =
+            "This ticket could not be loaded.";
+
+        return;
+    }
+
+
+    /* DISPLAY REAL DATABASE DATA */
+
+    document.getElementById(
+        "ticketTitle"
+    ).textContent =
+        ticket.title || "Ticket";
+
+
+    document.getElementById(
+        "ticketOdds"
+    ).textContent =
+        ticket.odds ?? "--";
+
+
+    price =
+        Number(ticket.price) || 0;
+
+
+    document.getElementById(
+        "ticketPrice"
+    ).textContent =
+        "R" + price.toFixed(2);
+
+
+    document.getElementById(
+        "ticketDescription"
+    ).textContent =
+        ticket.description || "";
+
+
+    loading.style.display = "none";
+
+    checkout.style.display = "block";
+
+    updateTotal();
+}
+
+
+/* UPDATE TOTAL */
+
+function updateTotal() {
+
+    let qty =
+        parseInt(quantity.value) || 1;
+
+    if (qty < 1) {
+        qty = 1;
+    }
+
+    if (qty > 20) {
+        qty = 20;
+    }
+
+    quantity.value = qty;
+
+    totalAmount.textContent =
+        "R" + (price * qty).toFixed(2);
+}
+
+
+quantity.addEventListener(
+    "input",
+    updateTotal
+);
+
+
+/* PAYMENT PLACEHOLDER */
+
+document
+    .getElementById("purchaseForm")
+    .addEventListener(
+        "submit",
+        function(e) {
+
+            e.preventDefault();
+
+            const name =
+                document.getElementById(
+                    "name"
+                ).value;
+
+            const qty =
+                parseInt(
+                    quantity.value
+                ) || 1;
+
+            const total =
+                price * qty;
+
+            alert(
+                "Payment gateway is ready to be connected.\n\n" +
+                "Ticket: " + ticketId + "\n" +
+                "Customer: " + name + "\n" +
+                "Tickets: " + qty + "\n" +
+                "Total: R" + total.toFixed(2)
+            );
+
+        }
+    );
+
+
+/* START */
+
+loadTicket();
+
+</script>
+
+</body>
+</html>
