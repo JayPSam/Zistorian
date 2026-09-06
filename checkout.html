@@ -1,1 +1,702 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZISTORIAN | Secure Checkout</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top, #19150a 0%, #050505 45%);
+    color: #fff;
+    min-height: 100vh;
+}
+
+.header {
+    padding: 25px 20px;
+    border-bottom: 1px solid #2a2414;
+    text-align: center;
+    background: rgba(0,0,0,.35);
+}
+
+.logo {
+    color: #e0b82f;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: 5px;
+}
+
+.container {
+    width: 92%;
+    max-width: 620px;
+    margin: 30px auto 60px;
+}
+
+.back {
+    display: inline-block;
+    color: #aaa;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.back:hover {
+    color: #e0b82f;
+}
+
+.card {
+    background: rgba(17,17,17,.96);
+    border: 1px solid #3b3218;
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 20px 55px rgba(0,0,0,.45);
+}
+
+.checkout-header {
+    margin-bottom: 25px;
+}
+
+.badge {
+    display: inline-block;
+    color: #e0b82f;
+    border: 1px solid #594b1c;
+    background: #171408;
+    border-radius: 50px;
+    padding: 7px 12px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 13px;
+}
+
+.title {
+    font-size: 30px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 14px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.info {
+    background: #191919;
+    border: 1px solid #292929;
+    padding: 17px;
+    border-radius: 14px;
+}
+
+.label {
+    color: #888;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 7px;
+}
+
+.info strong {
+    display: block;
+    color: #e0b82f;
+    font-size: 24px;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 25px 0 13px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 16px;
+    background: #141414;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+}
+
+input::placeholder {
+    color: #666;
+}
+
+input:focus {
+    border-color: #e0b82f;
+}
+
+.quantity-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #141414;
+    border: 1px solid #292929;
+    padding: 14px 15px;
+    border-radius: 12px;
+    margin-top: 2px;
+}
+
+.quantity-text {
+    color: #ddd;
+    font-size: 14px;
+}
+
+.quantity-row input {
+    width: 85px;
+    text-align: center;
+    padding: 12px;
+}
+
+.total {
+    margin-top: 8px;
+    padding: 19px;
+    background: linear-gradient(135deg, #191919, #121212);
+    border: 1px solid #3b3218;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-label {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.total-price {
+    color: #e0b82f;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+button {
+    margin-top: 5px;
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 13px;
+    background: #e0b82f;
+    color: #050505;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #f0c83e;
+}
+
+button:active {
+    transform: scale(.99);
+}
+
+.secure-note {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    margin-top: 17px;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.secure-icon {
+    color: #e0b82f;
+}
+
+.message {
+    text-align: center;
+    padding: 35px 10px;
+    color: #aaa;
+}
+
+.error {
+    color: #ff7070;
+}
+
+.hidden {
+    display: none;
+}
+
+.footer-note {
+    text-align: center;
+    color: #555;
+    font-size: 11px;
+    margin-top: 22px;
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+
+    .container {
+        width: 94%;
+        margin-top: 22px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 19px;
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    .info strong {
+        font-size: 21px;
+    }
+
+    .total-price {
+        font-size: 24px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">ZISTORIAN</div>
+</header>
+
+<main class="container">
+
+<a href="index.html#tickets" class="back">
+    ← Back to tickets
+</a>
+
+<div class="card">
+
+    <!-- LOADING -->
+
+    <div id="loading" class="message">
+        Loading ticket...
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div id="error" class="message error hidden">
+        This ticket could not be loaded.
+    </div>
+
+
+    <!-- CHECKOUT -->
+
+    <div id="checkout" class="hidden">
+
+        <div class="checkout-header">
+
+            <div class="badge">
+                SECURE CHECKOUT
+            </div>
+
+            <h1
+                class="title"
+                id="ticketTitle"
+            >
+                Ticket
+            </h1>
+
+            <p class="subtitle">
+                Review your ticket before continuing.
+            </p>
+
+        </div>
+
+
+        <!-- TICKET DETAILS -->
+
+        <div class="info-grid">
+
+            <div class="info">
+
+                <div class="label">
+                    Total Odds
+                </div>
+
+                <strong id="ticketOdds">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="label">
+                    Ticket Price
+                </div>
+
+                <strong id="ticketPrice">
+                    R0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="section-title">
+            Customer details
+        </div>
+
+        <form id="purchaseForm">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Full name"
+                autocomplete="name"
+                required
+            >
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="WhatsApp / Phone number"
+                autocomplete="tel"
+                required
+            >
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email address"
+                autocomplete="email"
+                required
+            >
+
+
+            <!-- QUANTITY -->
+
+            <div class="quantity-row">
+
+                <div class="quantity-text">
+                    Number of tickets
+                </div>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    value="1"
+                    min="1"
+                    max="20"
+                    inputmode="numeric"
+                    required
+                >
+
+            </div>
+
+
+            <!-- TOTAL -->
+
+            <div class="total">
+
+                <span class="total-label">
+                    Total
+                </span>
+
+                <span
+                    class="total-price"
+                    id="totalAmount"
+                >
+                    R0.00
+                </span>
+
+            </div>
+
+
+            <button type="submit">
+                CONTINUE TO PAYMENT
+            </button>
+
+        </form>
+
+
+        <div class="secure-note">
+
+            <span class="secure-icon">●</span>
+
+            <span>
+                Your order details are prepared securely.
+                Payment processing will be activated when
+                the payment provider is connected.
+            </span>
+
+        </div>
+
+
+        <div class="footer-note">
+            ZISTORIAN ticketing platform
+        </div>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+    "https://qhblzsqcvykfwobdcqsn.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const ticketId =
+    new URLSearchParams(
+        window.location.search
+    ).get("ticket");
+
+const loading =
+    document.getElementById("loading");
+
+const checkout =
+    document.getElementById("checkout");
+
+const errorBox =
+    document.getElementById("error");
+
+const quantity =
+    document.getElementById("quantity");
+
+const totalAmount =
+    document.getElementById("totalAmount");
+
+const purchaseForm =
+    document.getElementById("purchaseForm");
+
+
+/* =========================
+   STATE
+========================= */
+
+let price = 0;
+
+
+/* =========================
+   LOAD SELECTED TICKET
+========================= */
+
+async function loadTicket() {
+
+    if (!ticketId) {
+
+        loading.classList.add("hidden");
+
+        errorBox.textContent =
+            "No ticket was selected.";
+
+        errorBox.classList.remove("hidden");
+
+        return;
+    }
+
+
+    const {
+        data: ticket,
+        error
+    } = await supabaseClient
+
+        .from("tickets")
+
+        .select("*")
+
+        .eq("id", ticketId)
+
+        .single();
+
+
+    if (error || !ticket) {
+
+        console.error(
+            "Ticket loading error:",
+            error
+        );
+
+        loading.classList.add("hidden");
+
+        errorBox.textContent =
+            "This ticket is no longer available.";
+
+        errorBox.classList.remove("hidden");
+
+        return;
+    }
+
+
+    /* REAL DATABASE DATA */
+
+    document.getElementById(
+        "ticketTitle"
+    ).textContent =
+        ticket.title || "Ticket";
+
+
+    document.getElementById(
+        "ticketOdds"
+    ).textContent =
+        ticket.odds ?? "--";
+
+
+    price =
+        Number(ticket.price) || 0;
+
+
+    document.getElementById(
+        "ticketPrice"
+    ).textContent =
+        "R" + price.toFixed(2);
+
+
+    loading.classList.add("hidden");
+
+    checkout.classList.remove("hidden");
+
+    updateTotal();
+}
+
+
+/* =========================
+   UPDATE TOTAL
+========================= */
+
+function updateTotal() {
+
+    let qty =
+        parseInt(quantity.value) || 1;
+
+
+    if (qty < 1) {
+        qty = 1;
+    }
+
+
+    if (qty > 20) {
+        qty = 20;
+    }
+
+
+    quantity.value = qty;
+
+
+    const total =
+        price * qty;
+
+
+    totalAmount.textContent =
+        "R" + total.toFixed(2);
+}
+
+
+quantity.addEventListener(
+    "input",
+    updateTotal
+);
+
+
+/* =========================
+   DEMO PAYMENT
+========================= */
+
+purchaseForm.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById(
+                "name"
+            ).value.trim();
+
+
+        const qty =
+            parseInt(
+                quantity.value
+            ) || 1;
+
+
+        const total =
+            price * qty;
+
+
+        /*
+         * PAYMENT PROVIDER WILL BE
+         * CONNECTED HERE LATER.
+         *
+         * NO REAL PAYMENT IS TAKEN.
+         */
+
+        alert(
+            "Payment gateway is ready to be connected.\n\n" +
+            "Ticket: " + ticketId + "\n" +
+            "Customer: " + name + "\n" +
+            "Tickets: " + qty + "\n" +
+            "Total: R" + total.toFixed(2)
+        );
+
+    }
+);
+
+
+/* =========================
+   START
+========================= */
+
+loadTicket();
+
+</script>
+
+</body>
+</html>
