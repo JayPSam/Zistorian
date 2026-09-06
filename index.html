@@ -1,1 +1,1655 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZISTORIAN | Premium Football Tickets</title>
+
+<meta name="description" content="ZISTORIAN — curated football betting tickets and a refined mobile-first experience.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --black:#050505;
+    --black2:#0a0a0a;
+    --panel:#101010;
+    --panel2:#151515;
+    --gold:#d5b56a;
+    --gold-light:#f0d795;
+    --white:#f6f3ec;
+    --muted:#9b9a94;
+    --line:rgba(255,255,255,.09);
+    --green:#76d69b;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--black);
+    color:var(--white);
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:82px;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.82),
+        rgba(0,0,0,.15)
+    );
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+}
+
+.logo{
+    font-family:"Manrope",sans-serif;
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:.22em;
+}
+
+.logo span{
+    color:var(--gold);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:38px;
+}
+
+.nav-links a{
+    color:#c8c6bf;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--gold-light);
+}
+
+.nav-cta{
+    padding:13px 21px;
+    border:1px solid rgba(213,181,106,.55);
+    color:var(--gold-light)!important;
+    transition:.3s;
+}
+
+.nav-cta:hover{
+    background:var(--gold);
+    color:#050505!important;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    background:#050505;
+}
+
+.hero-image{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(3,3,3,.94) 0%,
+            rgba(3,3,3,.68) 42%,
+            rgba(3,3,3,.28) 72%,
+            rgba(3,3,3,.72) 100%
+        ),
+        linear-gradient(
+            0deg,
+            #050505 0%,
+            transparent 45%,
+            rgba(0,0,0,.4) 100%
+        ),
+        url("hero.jpg") center/cover no-repeat;
+    transform:scale(1.02);
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(
+            circle at 75% 35%,
+            rgba(213,181,106,.12),
+            transparent 32%
+        );
+    pointer-events:none;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    width:min(1180px,90%);
+    margin:auto;
+    padding-top:80px;
+}
+
+.hero-eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:26px;
+    color:var(--gold-light);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+}
+
+.hero-eyebrow::before{
+    content:"";
+    width:35px;
+    height:1px;
+    background:var(--gold);
+}
+
+.hero h1{
+    max-width:800px;
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(54px,8vw,108px);
+    line-height:.91;
+    letter-spacing:-.065em;
+    font-weight:800;
+}
+
+.hero h1 span{
+    color:var(--gold-light);
+}
+
+.hero-text{
+    max-width:520px;
+    margin-top:30px;
+    color:#c2c0b9;
+    font-size:17px;
+    line-height:1.7;
+}
+
+.hero-actions{
+    display:flex;
+    gap:14px;
+    margin-top:38px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:52px;
+    padding:0 25px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    transition:.3s;
+}
+
+.btn-gold{
+    background:var(--gold);
+    color:#080808;
+}
+
+.btn-gold:hover{
+    background:var(--gold-light);
+    transform:translateY(-2px);
+}
+
+.btn-outline{
+    border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.035);
+    backdrop-filter:blur(10px);
+}
+
+.btn-outline:hover{
+    border-color:var(--gold);
+    color:var(--gold-light);
+}
+
+.hero-bottom{
+    position:absolute;
+    z-index:3;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1180px,90%);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid rgba(255,255,255,.13);
+    padding-top:18px;
+}
+
+.hero-stat{
+    color:#aaa8a2;
+    font-size:10px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
+
+.hero-stat strong{
+    display:block;
+    color:#eeeae0;
+    margin-bottom:4px;
+    font-size:11px;
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+.section{
+    padding:120px 5%;
+}
+
+.container{
+    width:min(1180px,100%);
+    margin:auto;
+}
+
+.section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:48px;
+}
+
+.section-label{
+    color:var(--gold);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    margin-bottom:13px;
+}
+
+.section-title{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(36px,5vw,64px);
+    line-height:1;
+    letter-spacing:-.05em;
+}
+
+.section-description{
+    max-width:390px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+}
+
+/* =========================
+   TICKETS
+========================= */
+
+.tickets-section{
+    background:
+        radial-gradient(
+            circle at 20% 0%,
+            rgba(213,181,106,.07),
+            transparent 30%
+        ),
+        #080808;
+}
+
+.live-indicator{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#aaa;
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px rgba(118,214,155,.7);
+}
+
+.ticket-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.ticket-card{
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
+    border:1px solid var(--line);
+    transition:.4s ease;
+}
+
+.ticket-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(213,181,106,.35);
+    box-shadow:0 25px 60px rgba(0,0,0,.45);
+}
+
+.ticket-image{
+    position:relative;
+    height:210px;
+    overflow:hidden;
+    background:#111;
+}
+
+.ticket-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.ticket-card:hover .ticket-image img{
+    transform:scale(1.06);
+}
+
+.ticket-image::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.65),
+        transparent 60%
+    );
+}
+
+.ticket-status{
+    position:absolute;
+    z-index:2;
+    top:15px;
+    right:15px;
+    padding:7px 10px;
+    background:rgba(5,5,5,.78);
+    border:1px solid rgba(118,214,155,.35);
+    color:#9be4b6;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.12em;
+}
+
+.ticket-body{
+    padding:25px;
+}
+
+.ticket-title{
+    min-height:48px;
+    font-family:"Manrope",sans-serif;
+    font-size:20px;
+    font-weight:700;
+    line-height:1.2;
+}
+
+.ticket-meta{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin:22px 0;
+    padding:17px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+.meta-label{
+    display:block;
+    color:#777;
+    font-size:9px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.meta-value{
+    font-size:15px;
+    font-weight:700;
+}
+
+.odds{
+    color:var(--gold-light);
+}
+
+.buy-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:50px;
+    background:var(--gold);
+    color:#070707;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.17em;
+    transition:.3s;
+}
+
+.buy-btn:hover{
+    background:var(--gold-light);
+}
+
+.loading{
+    grid-column:1/-1;
+    padding:70px 20px;
+    text-align:center;
+    color:#777;
+    border:1px dashed rgba(255,255,255,.12);
+}
+
+.empty{
+    grid-column:1/-1;
+    padding:70px 20px;
+    text-align:center;
+    border:1px solid var(--line);
+    background:#0c0c0c;
+}
+
+.empty h3{
+    font-family:"Manrope",sans-serif;
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.empty p{
+    color:#777;
+}
+
+/* =========================
+   EXPERIENCE
+========================= */
+
+.experience{
+    background:#050505;
+}
+
+.experience-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.experience-copy h2{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(38px,5vw,65px);
+    line-height:1;
+    letter-spacing:-.055em;
+}
+
+.experience-copy h2 span{
+    color:var(--gold-light);
+}
+
+.experience-copy p{
+    max-width:550px;
+    margin-top:25px;
+    color:var(--muted);
+    line-height:1.85;
+    font-size:15px;
+}
+
+.experience-list{
+    margin-top:35px;
+    display:grid;
+    gap:14px;
+}
+
+.experience-item{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    padding:17px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.experience-number{
+    color:var(--gold);
+    font-size:11px;
+    font-weight:800;
+}
+
+.experience-item span:last-child{
+    font-size:13px;
+    color:#d5d2ca;
+}
+
+.experience-visual{
+    position:relative;
+    min-height:520px;
+    overflow:hidden;
+    background:#111;
+}
+
+.experience-visual::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.65),
+            transparent 50%
+        );
+}
+
+.experience-visual img{
+    width:100%;
+    height:100%;
+    min-height:520px;
+    object-fit:cover;
+}
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.how{
+    background:
+        linear-gradient(
+            135deg,
+            #0d0d0d,
+            #060606
+        );
+}
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.step{
+    background:#0b0b0b;
+    padding:42px 35px;
+    min-height:260px;
+}
+
+.step-number{
+    color:var(--gold);
+    font-size:11px;
+    letter-spacing:.18em;
+    font-weight:800;
+}
+
+.step h3{
+    margin-top:35px;
+    font-family:"Manrope",sans-serif;
+    font-size:23px;
+}
+
+.step p{
+    margin-top:14px;
+    color:#85847f;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* =========================
+   BHONYINGTON
+========================= */
+
+.about{
+    padding-top:80px;
+}
+
+.about-card{
+    position:relative;
+    min-height:620px;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+    border:1px solid var(--line);
+}
+
+.about-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.92) 0%,
+            rgba(0,0,0,.67) 48%,
+            rgba(0,0,0,.08) 100%
+        ),
+        linear-gradient(
+            0deg,
+            rgba(0,0,0,.8),
+            transparent 55%
+        );
+    z-index:2;
+}
+
+.about-card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.about-content{
+    position:relative;
+    z-index:3;
+    max-width:620px;
+    padding:65px;
+}
+
+.about-content .section-label{
+    margin-bottom:18px;
+}
+
+.about-content h2{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(42px,6vw,75px);
+    line-height:.95;
+    letter-spacing:-.06em;
+}
+
+.about-content h2 span{
+    color:var(--gold-light);
+}
+
+.about-content p{
+    margin-top:24px;
+    color:#bbb8b0;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.contact-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:32px;
+}
+
+.contact-link{
+    padding:13px 16px;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(12px);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    transition:.3s;
+}
+
+.contact-link:hover{
+    border-color:var(--gold);
+    color:var(--gold-light);
+}
+
+/* =========================
+   FINAL CTA
+========================= */
+
+.final-cta{
+    text-align:center;
+    padding:130px 5%;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(213,181,106,.09),
+            transparent 38%
+        ),
+        #060606;
+}
+
+.final-cta h2{
+    max-width:850px;
+    margin:auto;
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(42px,6vw,78px);
+    line-height:.98;
+    letter-spacing:-.06em;
+}
+
+.final-cta h2 span{
+    color:var(--gold-light);
+}
+
+.final-cta p{
+    max-width:500px;
+    margin:25px auto 32px;
+    color:#888;
+    line-height:1.7;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:45px 5%;
+    border-top:1px solid var(--line);
+    background:#030303;
+}
+
+.footer-inner{
+    width:min(1180px,100%);
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:25px;
+    align-items:flex-start;
+}
+
+.footer-brand{
+    font-family:"Manrope",sans-serif;
+    font-weight:800;
+    letter-spacing:.2em;
+}
+
+.footer-brand span{
+    color:var(--gold);
+}
+
+.footer-right{
+    text-align:right;
+    color:#666;
+    font-size:10px;
+    line-height:1.8;
+    letter-spacing:.05em;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    .nav{
+        height:70px;
+        padding:0 6%;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .nav-links a:not(.nav-cta){
+        display:none;
+    }
+
+    .nav-links{
+        gap:0;
+    }
+
+    .nav-cta{
+        padding:11px 15px;
+        font-size:9px!important;
+    }
+
+    .hero-content{
+        width:88%;
+        padding-top:40px;
+    }
+
+    .hero h1{
+        font-size:clamp(52px,15vw,80px);
+    }
+
+    .hero-text{
+        font-size:15px;
+    }
+
+    .hero-bottom{
+        width:88%;
+        grid-template-columns:1fr 1fr 1fr;
+        gap:10px;
+    }
+
+    .hero-stat{
+        font-size:8px;
+    }
+
+    .hero-stat strong{
+        font-size:9px;
+    }
+
+    .section{
+        padding:85px 6%;
+    }
+
+    .section-head{
+        display:block;
+        margin-bottom:35px;
+    }
+
+    .section-description{
+        margin-top:20px;
+    }
+
+    .ticket-grid{
+        grid-template-columns:1fr;
+    }
+
+    .experience-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .experience-visual,
+    .experience-visual img{
+        min-height:400px;
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .step{
+        min-height:auto;
+        padding:32px 27px;
+    }
+
+    .about-card{
+        min-height:650px;
+    }
+
+    .about-content{
+        padding:32px 25px;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+    }
+
+    .footer-right{
+        text-align:left;
+    }
+}
+
+@media(max-width:480px){
+
+    .hero{
+        min-height:100svh;
+    }
+
+    .hero-image{
+        background:
+            linear-gradient(
+                0deg,
+                rgba(3,3,3,.96) 0%,
+                rgba(3,3,3,.58) 55%,
+                rgba(3,3,3,.48) 100%
+            ),
+            url("hero.jpg") center/cover no-repeat;
+    }
+
+    .hero h1{
+        font-size:54px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .hero-bottom{
+        bottom:18px;
+    }
+
+    .hero-stat:nth-child(2){
+        text-align:center;
+    }
+
+    .hero-stat:nth-child(3){
+        text-align:right;
+    }
+
+    .ticket-image{
+        height:190px;
+    }
+
+    .about-card{
+        min-height:680px;
+    }
+
+    .contact-row{
+        flex-direction:column;
+    }
+
+    .contact-link{
+        width:100%;
+        text-align:center;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAV
+========================= -->
+
+<nav class="nav">
+
+    <a href="index.html" class="logo">
+        ZIST<span>O</span>RIAN
+    </a>
+
+    <div class="nav-links">
+
+        <a href="#tickets">Tickets</a>
+
+        <a href="#experience">Experience</a>
+
+        <a href="#how">How It Works</a>
+
+        <a href="#tickets" class="nav-cta">
+            View Tickets
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+    <div class="hero-image"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-eyebrow">
+            ZISTORIAN SOCCER BETS
+        </div>
+
+        <h1>
+            THE GAME.<br>
+            <span>YOUR MOVE.</span>
+        </h1>
+
+        <p class="hero-text">
+            A refined destination for curated football betting tickets,
+            built around a sharper experience from selection to checkout.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="#tickets" class="btn btn-gold">
+                Explore Tickets
+            </a>
+
+            <a href="#about" class="btn btn-outline">
+                Meet Mr Bhonyington
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-bottom">
+
+        <div class="hero-stat">
+            <strong>Curated</strong>
+            Football Tickets
+        </div>
+
+        <div class="hero-stat">
+            <strong>Live</strong>
+            Ticket Availability
+        </div>
+
+        <div class="hero-stat">
+            <strong>Simple</strong>
+            Mobile Checkout
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     TICKETS
+========================= -->
+
+<section class="section tickets-section" id="tickets">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-label">
+                    The Collection
+                </div>
+
+                <h2 class="section-title">
+                    Live Tickets
+                </h2>
+
+            </div>
+
+            <div class="section-description">
+
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    Available now
+                </div>
+
+                <p style="margin-top:12px;">
+                    Select a ticket, review the details and continue
+                    through the ZISTORIAN checkout experience.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div id="ticketGrid" class="ticket-grid">
+
+            <div class="loading">
+                Loading available tickets...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     EXPERIENCE
+========================= -->
+
+<section class="section experience" id="experience">
+
+    <div class="container">
+
+        <div class="experience-grid">
+
+            <div class="experience-copy">
+
+                <div class="section-label">
+                    The Zistorian Standard
+                </div>
+
+                <h2>
+                    Less noise.<br>
+                    <span>More game.</span>
+                </h2>
+
+                <p>
+                    ZISTORIAN is designed to make the journey simple.
+                    Discover available tickets, understand the details
+                    and move through checkout without unnecessary clutter.
+                </p>
+
+                <div class="experience-list">
+
+                    <div class="experience-item">
+                        <span class="experience-number">01</span>
+                        <span>Curated football selections</span>
+                    </div>
+
+                    <div class="experience-item">
+                        <span class="experience-number">02</span>
+                        <span>Clear odds and ticket pricing</span>
+                    </div>
+
+                    <div class="experience-item">
+                        <span class="experience-number">03</span>
+                        <span>Designed for mobile users</span>
+                    </div>
+
+                    <div class="experience-item">
+                        <span class="experience-number">04</span>
+                        <span>Simple ticket checkout flow</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="experience-visual">
+
+                <img
+                    src="hero.jpg"
+                    alt="ZISTORIAN football experience"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section class="section how" id="how">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-label">
+                    Simple By Design
+                </div>
+
+                <h2 class="section-title">
+                    How It Works
+                </h2>
+
+            </div>
+
+            <div class="section-description">
+                Three simple steps from ticket discovery to checkout.
+            </div>
+
+        </div>
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="step-number">
+                    01 / DISCOVER
+                </div>
+
+                <h3>
+                    Choose your ticket
+                </h3>
+
+                <p>
+                    Browse the currently available football tickets
+                    and select the one that interests you.
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="step-number">
+                    02 / REVIEW
+                </div>
+
+                <h3>
+                    Review the details
+                </h3>
+
+                <p>
+                    Check the ticket selection, odds, price and
+                    available game window before continuing.
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="step-number">
+                    03 / CHECKOUT
+                </div>
+
+                <h3>
+                    Continue to checkout
+                </h3>
+
+                <p>
+                    Enter your order quantity and continue through
+                    the streamlined checkout experience.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MR BHONYINGTON
+========================= -->
+
+<section class="section about" id="about">
+
+    <div class="container">
+
+        <div class="about-card">
+
+            <img
+                src="bhonyington.jpg"
+                alt="Mr Bhonyington"
+            >
+
+            <div class="about-content">
+
+                <div class="section-label">
+                    The Person Behind Zistorian
+                </div>
+
+                <h2>
+                    Meet Mr<br>
+                    <span>Bhonyington.</span>
+                </h2>
+
+                <p>
+                    For enquiries, ticket information and direct
+                    communication, connect with Mr Bhonyington
+                    through the contact options below.
+                </p>
+
+                <div class="contact-row">
+
+                    <a
+                        href="tel:+27822570406"
+                        class="contact-link"
+                    >
+                        +27 82 257 0406
+                    </a>
+
+                    <a
+                        href="mailto:dragonslanding@outlook.com"
+                        class="contact-link"
+                    >
+                        Email
+                    </a>
+
+                    <a
+                        href="https://wa.me/27822570406"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-link"
+                    >
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FINAL CTA
+========================= -->
+
+<section class="final-cta">
+
+    <div class="container">
+
+        <div class="section-label">
+            ZISTORIAN
+        </div>
+
+        <h2>
+            Your next ticket<br>
+            <span>starts here.</span>
+        </h2>
+
+        <p>
+            Explore the available selection and find your next
+            football ticket.
+        </p>
+
+        <a href="#tickets" class="btn btn-gold">
+            View Available Tickets
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+            ZIST<span>O</span>RIAN
+        </div>
+
+        <div class="footer-right">
+
+            <div>
+                18+ | Bet responsibly. Gambling involves financial risk.
+            </div>
+
+            <div>
+                © 2026 ZISTORIAN. All rights reserved.
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://qhblzsqcvykfwobdcqsn.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function formatDate(value){
+
+    if(!value) return "TBC";
+
+    const date = new Date(value);
+
+    if(Number.isNaN(date.getTime())){
+        return "TBC";
+    }
+
+    return date.toLocaleString(
+        "en-ZA",
+        {
+            day:"2-digit",
+            month:"short",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+async function loadPublicTickets(){
+
+    const ticketGrid =
+        document.getElementById("ticketGrid");
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("tickets")
+            .select("*")
+            .eq("status","active")
+            .gt(
+                "last_game_at",
+                new Date().toISOString()
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+        if(error){
+            throw error;
+        }
+
+        if(!data || data.length === 0){
+
+            ticketGrid.innerHTML = `
+                <div class="empty">
+
+                    <h3>
+                        No tickets available
+                    </h3>
+
+                    <p>
+                        New football selections will appear here.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        ticketGrid.innerHTML = data.map(ticket => {
+
+            const image =
+                ticket.image_url
+                    ? `
+                        <div class="ticket-image">
+
+                            <img
+                                src="${escapeHtml(ticket.image_url)}"
+                                alt="${escapeHtml(ticket.title)}"
+                            >
+
+                            <div class="ticket-status">
+                                AVAILABLE
+                            </div>
+
+                        </div>
+                    `
+                    : `
+                        <div class="ticket-image">
+
+                            <div class="ticket-status">
+                                AVAILABLE
+                            </div>
+
+                        </div>
+                    `;
+
+
+            return `
+
+                <article class="ticket-card">
+
+                    ${image}
+
+                    <div class="ticket-body">
+
+                        <h3 class="ticket-title">
+                            ${escapeHtml(ticket.title)}
+                        </h3>
+
+                        <div class="ticket-meta">
+
+                            <div>
+
+                                <span class="meta-label">
+                                    Odds
+                                </span>
+
+                                <span class="meta-value odds">
+                                    ${escapeHtml(ticket.odds)}
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <span class="meta-label">
+                                    Price
+                                </span>
+
+                                <span class="meta-value">
+                                    R${escapeHtml(ticket.price)}
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <span class="meta-label">
+                                    First Game
+                                </span>
+
+                                <span class="meta-value">
+                                    ${formatDate(ticket.first_game_at)}
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <span class="meta-label">
+                                    Last Game
+                                </span>
+
+                                <span class="meta-value">
+                                    ${formatDate(ticket.last_game_at)}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <a
+                            href="checkout.html?ticket=${encodeURIComponent(ticket.id)}"
+                            class="buy-btn"
+                        >
+                            PURCHASE TICKET
+                        </a>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+
+    }catch(error){
+
+        console.error("Ticket loading error:",error);
+
+        ticketGrid.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Tickets are temporarily unavailable
+                </h3>
+
+                <p>
+                    Please try again shortly.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+loadPublicTickets();
+
+</script>
+
+</body>
+</html>
