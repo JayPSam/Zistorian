@@ -449,6 +449,94 @@ quantity.addEventListener(
 
 
 /* CONTINUE TO PAYMENT */
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://qhblzsqcvykfwobdcqsn.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
+
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+const ticketId = new URLSearchParams(window.location.search).get("ticket");
+
+const quantity = document.getElementById("quantity");
+const totalAmount = document.getElementById("totalAmount");
+
+let price = 0;
+
+
+/* LOAD THE SELECTED TICKET */
+
+async function loadTicket() {
+
+    if (!ticketId) {
+        document.getElementById("ticketTitle").textContent =
+            "Ticket not selected";
+        return;
+    }
+
+    const { data, error } = await db
+        .from("tickets")
+        .select("*")
+        .eq("id", ticketId)
+        .single();
+
+    if (error) {
+        console.error("Ticket loading error:", error);
+
+        document.getElementById("ticketTitle").textContent =
+            "Unable to load ticket";
+
+        return;
+    }
+
+    if (!data) {
+        document.getElementById("ticketTitle").textContent =
+            "Ticket not found";
+        return;
+    }
+
+    console.log("Selected ticket:", data);
+
+    /* REAL DATABASE VALUES */
+
+    document.getElementById("ticketTitle").textContent =
+        data.title || "Ticket";
+
+    document.getElementById("ticketOdds").textContent =
+        data.odds ?? "--";
+
+    price = Number(data.price) || 0;
+
+    document.getElementById("ticketPrice").textContent =
+        "R" + price.toFixed(2);
+
+    updateTotal();
+}
+
+
+/* UPDATE TOTAL */
+
+function updateTotal() {
+
+    let qty = parseInt(quantity.value) || 1;
+
+    if (qty < 1) qty = 1;
+    if (qty > 20) qty = 20;
+
+    quantity.value = qty;
+
+    totalAmount.textContent =
+        "R" + (price * qty).toFixed(2);
+}
+
+quantity.addEventListener("input", updateTotal);
+
+
+/* CONTINUE TO PAYMENT */
 
 document
     .getElementById("purchaseForm")
@@ -466,7 +554,7 @@ document
             document.getElementById("email").value;
 
         const qty =
-            parseInt(quantity.value);
+            parseInt(quantity.value) || 1;
 
         const total =
             price * qty;
@@ -476,11 +564,12 @@ document
             "Ticket: " + ticketId + "\n" +
             "Customer: " + name + "\n" +
             "Tickets: " + qty + "\n" +
-            "Total: R" + total
+            "Total: R" + total.toFixed(2)
         );
+    });
 
-});
 
+/* START */
 
 loadTicket();
 
