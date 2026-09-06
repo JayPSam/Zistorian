@@ -240,18 +240,20 @@ button:hover {
 
     <div class="label">Purchase Ticket</div>
 
-    <h1 class="title">Wednesday Sniper</h1>
+    <h1 class="title" id="ticketTitle">Loading ticket...</h1>
 
-    <div class="info-grid">
+
+    
+ <div class="info-grid">
 
         <div class="info">
             <div class="label">Odds</div>
-            <strong>38.5</strong>
+            <strong id="ticketOdds">--</strong>
         </div>
 
         <div class="info">
             <div class="label">Price</div>
-            <strong>R50</strong>
+            <strong id="ticketPrice">R0</strong>
         </div>
 
     </div>
@@ -349,57 +351,138 @@ button:hover {
 
 
 <script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const price = 50;
-    const ticketId = new URLSearchParams(window.location.search).get("ticket");
+<script>
 
-const quantity = document.getElementById("quantity");
-const totalAmount = document.getElementById("totalAmount");
+const SUPABASE_URL =
+    "https://qhblzsqcvykfwobdcqsn.supabase.co";
 
-quantity.addEventListener("input", function () {
+const SUPABASE_ANON_KEY =
+    "sb_publishable_aJe-IKXMJB_9wl_6sD62SA_dPZcu49M";
 
-    let qty = parseInt(quantity.value) || 1;
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+const ticketId =
+    new URLSearchParams(window.location.search).get("ticket");
+
+const quantity =
+    document.getElementById("quantity");
+
+const totalAmount =
+    document.getElementById("totalAmount");
+
+let price = 0;
+
+
+/* LOAD SELECTED TICKET */
+
+async function loadTicket() {
+
+    if (!ticketId) {
+        document.getElementById("ticketTitle").textContent =
+            "Ticket not found";
+
+        return;
+    }
+
+    const { data: ticket, error } =
+        await supabaseClient
+            .from("tickets")
+            .select("*")
+            .eq("id", ticketId)
+            .single();
+
+    if (error || !ticket) {
+
+        console.error(error);
+
+        document.getElementById("ticketTitle").textContent =
+            "Ticket unavailable";
+
+        return;
+    }
+
+    /* Display real ticket information */
+
+    document.getElementById("ticketTitle").textContent =
+        ticket.title;
+
+    document.getElementById("ticketOdds").textContent =
+        ticket.odds;
+
+    price =
+        Number(ticket.price) || 0;
+
+    document.getElementById("ticketPrice").textContent =
+        "R" + price;
+
+    updateTotal();
+}
+
+
+/* UPDATE TOTAL */
+
+function updateTotal() {
+
+    let qty =
+        parseInt(quantity.value) || 1;
 
     if (qty < 1) qty = 1;
     if (qty > 20) qty = 20;
 
     quantity.value = qty;
 
-    totalAmount.textContent = "R" + (price * qty);
+    totalAmount.textContent =
+        "R" + (price * qty);
+}
 
-});
 
-
-document.getElementById("purchaseForm").addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    const qty = parseInt(quantity.value);
-
-    const total = price * qty;
-
-    /*
-       PAYMENT PLACEHOLDER
-
-       The customer has completed checkout details.
-       We do NOT create the ticket yet.
-
-       When the real payment gateway is connected,
-       payment will be started here.
-    */
-
-    alert(
-    "Payment gateway is ready to be connected.\n\n" +
-    "Ticket ID: " + ticketId + "\n" +
-    "Customer: " + name + "\n" +
-    "Tickets: " + qty + "\n" +
-    "Total: R" + total
+quantity.addEventListener(
+    "input",
+    updateTotal
 );
 
+
+/* CONTINUE TO PAYMENT */
+
+document
+    .getElementById("purchaseForm")
+    .addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        const name =
+            document.getElementById("name").value;
+
+        const phone =
+            document.getElementById("phone").value;
+
+        const email =
+            document.getElementById("email").value;
+
+        const qty =
+            parseInt(quantity.value);
+
+        const total =
+            price * qty;
+
+        alert(
+            "Payment gateway is ready to be connected.\n\n" +
+            "Ticket: " + ticketId + "\n" +
+            "Customer: " + name + "\n" +
+            "Tickets: " + qty + "\n" +
+            "Total: R" + total
+        );
+
 });
+
+
+loadTicket();
 
 </script>
 
