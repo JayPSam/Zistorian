@@ -351,6 +351,7 @@ button:hover {
 <script>
 
 const price = 50;
+    const ticketId = new URLSearchParams(window.location.search).get("ticket");
 
 const quantity = document.getElementById("quantity");
 const totalAmount = document.getElementById("totalAmount");
@@ -391,11 +392,12 @@ document.getElementById("purchaseForm").addEventListener("submit", function(e) {
     */
 
     alert(
-        "Payment gateway is ready to be connected.\n\n" +
-        "Customer: " + name + "\n" +
-        "Tickets: " + qty + "\n" +
-        "Total: R" + total
-    );
+    "Payment gateway is ready to be connected.\n\n" +
+    "Ticket ID: " + ticketId + "\n" +
+    "Customer: " + name + "\n" +
+    "Tickets: " + qty + "\n" +
+    "Total: R" + total
+);
 
 });
 
