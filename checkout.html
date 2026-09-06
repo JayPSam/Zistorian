@@ -355,7 +355,7 @@ const price = 50;
 const quantity = document.getElementById("quantity");
 const totalAmount = document.getElementById("totalAmount");
 
-quantity.addEventListener("input", function() {
+quantity.addEventListener("input", function () {
 
     let qty = parseInt(quantity.value) || 1;
 
@@ -378,26 +378,24 @@ document.getElementById("purchaseForm").addEventListener("submit", function(e) {
     const email = document.getElementById("email").value;
     const qty = parseInt(quantity.value);
 
-    const ticketNumber =
-        "ZIS-" +
-        Date.now().toString().slice(-6);
+    const total = price * qty;
 
-    document.getElementById("ticketNumber").textContent =
-        ticketNumber;
+    /*
+       PAYMENT PLACEHOLDER
 
-    document.getElementById("checkout").style.display = "none";
+       The customer has completed checkout details.
+       We do NOT create the ticket yet.
 
-    document.getElementById("success").style.display = "block";
+       When the real payment gateway is connected,
+       payment will be started here.
+    */
 
-    console.log({
-        ticket: ticketNumber,
-        customer: name,
-        phone: phone,
-        email: email,
-        quantity: qty,
-        total: price * qty,
-        status: "PAYMENT_PENDING"
-    });
+    alert(
+        "Payment gateway is ready to be connected.\n\n" +
+        "Customer: " + name + "\n" +
+        "Tickets: " + qty + "\n" +
+        "Total: R" + total
+    );
 
 });
 
